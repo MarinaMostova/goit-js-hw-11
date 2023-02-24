@@ -4,6 +4,7 @@ export default class ImageService {
   constructor() {
     this.searchOuery = '';
     this.page = 1;
+    this.perPage = 40;
   }
 
   get query() {
@@ -19,7 +20,7 @@ export default class ImageService {
     const API_KEY = '33857774-d4152e7dd23a1d1cd9f80d986';
     try {
       const response = await axios.get(
-        `${BASE_URL}?key=${API_KEY}&q=${this.searchOuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`
+        `${BASE_URL}?key=${API_KEY}&q=${this.searchOuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.perPage}&page=${this.page}`
       );
       this.page += 1;
       return response.data;

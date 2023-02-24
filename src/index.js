@@ -1,3 +1,4 @@
+import axios from 'axios';
 import ImageService from './js/image-servise';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -24,7 +25,7 @@ function onFormSubmit(e) {
   dataCleaning();
 }
 
-function handleResponse(data) {
+async function handleResponse(data) {
   if (data.totalHits === 0) {
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
@@ -44,6 +45,16 @@ function onLoadMore(event) {
     .then(data => {
       createGallery(data.hits);
       lightbox().refresh();
+
+      let currentPage = data.totalHits / imageService.perPage;
+      console.log(currentPage);
+
+      if (imageService.page > currentPage) {
+        Notiflix.Notify.info(
+          "We're sorry, but you've reached the end of search results."
+        );
+        refs.buttonLoadMore.classList.add('is-hidden');
+      }
     })
     .catch(onFetchError);
 }
@@ -95,3 +106,27 @@ function dataCleaning() {
   refs.buttonLoadMore.classList.add('is-hidden');
 }
 
+// fetchImages(name, page, perPage)
+//   .then(name => {
+//     let totalPages = name.totalHits / perPage;
+
+//     if (name.hits.length > 0) {
+//       Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
+//       renderGallery(name);
+//       new SimpleLightbox('.gallery a');
+//       closeBtn.style.display = 'block';
+//       closeBtn.addEventListener('click', () => {
+//         gallery.innerHTML = '';
+//         closeBtn.style.display = 'none';
+//       });
+
+//       if (page < totalPages) {
+//         loadBtn.style.display = 'block';
+//       } else {
+//         loadBtn.style.display = 'none';
+//         Notiflix.Notify.info(
+//           "We're sorry, but you've reached the end of search results."
+//         );
+//       }
+
+//
