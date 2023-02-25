@@ -1,3 +1,4 @@
+import './css/styles.css';
 import axios from 'axios';
 import ImageService from './js/image-servise';
 import SimpleLightbox from 'simplelightbox';
@@ -105,28 +106,3 @@ function dataCleaning() {
   refs.galleryContainer.innerHTML = '';
   refs.buttonLoadMore.classList.add('is-hidden');
 }
-
-// fetchImages(name, page, perPage)
-//   .then(name => {
-//     let totalPages = name.totalHits / perPage;
-
-//     if (name.hits.length > 0) {
-//       Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
-//       renderGallery(name);
-//       new SimpleLightbox('.gallery a');
-//       closeBtn.style.display = 'block';
-//       closeBtn.addEventListener('click', () => {
-//         gallery.innerHTML = '';
-//         closeBtn.style.display = 'none';
-//       });
-
-//       if (page < totalPages) {
-//         loadBtn.style.display = 'block';
-//       } else {
-//         loadBtn.style.display = 'none';
-//         Notiflix.Notify.info(
-//           "We're sorry, but you've reached the end of search results."
-//         );
-//       }
-
-//
