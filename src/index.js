@@ -1,4 +1,3 @@
-import './css/styles.css';
 import axios from 'axios';
 import ImageService from './js/image-servise';
 import SimpleLightbox from 'simplelightbox';
