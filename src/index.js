@@ -1,4 +1,3 @@
-import axios from 'axios';
 import ImageService from './js/image-servise';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -20,8 +19,8 @@ function onFormSubmit(e) {
   e.preventDefault();
 
   imageService.query = e.currentTarget.elements.searchQuery.value.trim();
+   imageService.fetchImages().then(handleResponse).catch(onFetchError);
   imageService.resetPage();
-  imageService.fetchImages().then(handleResponse).catch(onFetchError);
   dataCleaning();
 }
 
@@ -105,3 +104,14 @@ function dataCleaning() {
   refs.galleryContainer.innerHTML = '';
   refs.buttonLoadMore.classList.add('is-hidden');
 }
+
+const { height: cardHeight } = document
+  .querySelector('.gallery')
+  .firstElementChild.getBoundingClientRect();
+
+document.querySelector('#scroll-button').addEventListener('click', () => {
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
+});
