@@ -88,6 +88,7 @@ img {
   max-width: 100%;
   max-height: 100%;
   padding: 0;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .load-more {
@@ -115,6 +116,16 @@ img {
   width: calc((100% - 40px) / 4);
   padding: 5px;
   border: 2px solid rgb(128, 128, 128, 0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.photo-card:hover {
+  border-color: rgb(128, 128, 128);
+  box-shadow: 0 0 5px rgb(0, 3, 255);
+}
+
+.photo-card:hover img {
+  transform: scale(1.1);
 }
 
 .info {
@@ -127,4 +138,16 @@ img {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+.end-page {
+  padding: 15px 0;
+  text-align: center;
+  font-style: italic;
+  font-size: 18px;
+  color: rgb(128, 128, 128);
+}
+
+.spinner {
+  margin: 0 auto;
 }

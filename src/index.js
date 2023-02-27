@@ -7,60 +7,61 @@ const refs = {
   form: document.querySelector('#search-form'),
   galleryContainer: document.querySelector('.gallery'),
   buttonLoadMore: document.querySelector('.load-more'),
+  endPageText: document.querySelector('.end-page'),
+  spinner: document.querySelector('.spinner'),
 };
 
 const imageService = new ImageService();
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.buttonLoadMore.addEventListener('click', onLoadMore);
-refs.buttonLoadMore.classList.add('is-hidden');
 
 function onFormSubmit(e) {
   e.preventDefault();
+  imageService.resetPage();
 
   imageService.query = e.currentTarget.elements.searchQuery.value.trim();
-   imageService.fetchImages().then(handleResponse).catch(onFetchError);
-  imageService.resetPage();
+
+  imageService.fetchImages().then(onfetchGallery).catch(onFetchError);
   dataCleaning();
 }
 
-async function handleResponse(data) {
+function onfetchGallery(data) {
   if (data.totalHits === 0) {
-    Notiflix.Notify.failure(
+    Notiflix.Notify.warning(
       'Sorry, there are no images matching your search query. Please try again.'
     );
+    imageService.resetPage();
     dataCleaning();
     return;
   }
   Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
   createGallery(data.hits);
   lightbox();
-  refs.buttonLoadMore.classList.remove('is-hidden');
+
+  data.totalHits > imageService.perPage
+    ? refs.buttonLoadMore.classList.remove('is-hidden')
+    : refs.endPageText.classList.remove('is-hidden');
 }
 
 function onLoadMore(event) {
-  imageService
-    .fetchImages()
-    .then(data => {
-      createGallery(data.hits);
-      lightbox().refresh();
+  showSpinner();
 
-      let currentPage = data.totalHits / imageService.perPage;
-      console.log(currentPage);
+  imageService.fetchImages().then(data => {
+    createGallery(data.hits);
+    lightbox().refresh();
 
-      if (imageService.page > currentPage) {
-        Notiflix.Notify.info(
-          "We're sorry, but you've reached the end of search results."
-        );
-        refs.buttonLoadMore.classList.add('is-hidden');
-      }
-    })
-    .catch(onFetchError);
+    hideSpinner();
+
+    let currentPage = data.totalHits / imageService.perPage;
+    if (imageService.page > currentPage) {
+      refs.buttonLoadMore.classList.add('is-hidden');
+      refs.endPageText.classList.remove('is-hidden');
+    }
+  });
 }
 
 function createGallery(images) {
-  console.log(images);
-
   const markup = images
     .map(
       image =>
@@ -96,22 +97,23 @@ function lightbox() {
   });
 }
 
+function showSpinner() {
+  refs.spinner.classList.remove('is-hidden');
+  refs.buttonLoadMore.classList.add('is-hidden');
+}
+
+function hideSpinner() {
+  refs.spinner.classList.add('is-hidden');
+  refs.buttonLoadMore.classList.remove('is-hidden');
+}
+
 function onFetchError(error) {
-  Notiflix.Notify.warning('An error has occurred. Please try again.');
+  Notiflix.Notify.failure('An error has occurred. Please try again.');
+  console.error(error);
 }
 
 function dataCleaning() {
   refs.galleryContainer.innerHTML = '';
   refs.buttonLoadMore.classList.add('is-hidden');
+  refs.endPage.classList.add('is-hidden');
 }
-
-const { height: cardHeight } = document
-  .querySelector('.gallery')
-  .firstElementChild.getBoundingClientRect();
-
-document.querySelector('#scroll-button').addEventListener('click', () => {
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
-});

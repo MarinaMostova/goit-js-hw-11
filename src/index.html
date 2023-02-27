@@ -15,14 +15,24 @@
         autocomplete="off"
         placeholder="Search images..."
       />
-      <button type="submit" id="scroll-button" >Search</button>
+      <button type="submit" id="scroll-button">Search</button>
     </form>
     <div class="gallery">
       <!-- Картки зображень -->
     </div>
-    <button type="button" id="scroll-button" class="load-more">
+    <button type="button" id="scroll-button" class="load-more is-hidden">
       Load more
     </button>
+    <div class="end-page is-hidden">
+      We're sorry, but you've reached the end of search results.
+    </div>
+    <img
+      src="./images/loader_Bagic.gif"
+      alt="spinner"
+      class="spinner is-hidden"
+      width="60px"
+    />
+
     <script type="module" src="index.js"></script>
   </body>
 </html>
