@@ -13,6 +13,8 @@ const refs = {
 
 const imageService = new ImageService();
 
+const lightbox = new SimpleLightbox('.gallery a');
+
 refs.form.addEventListener('submit', onFormSubmit);
 refs.buttonLoadMore.addEventListener('click', onLoadMore);
 
@@ -41,7 +43,7 @@ function onfetchGallery(data) {
   }
   Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
   createGallery(data.hits);
-  lightbox();
+  lightbox.refresh();
 
   data.totalHits > imageService.perPage
     ? refs.buttonLoadMore.classList.remove('is-hidden')
@@ -53,7 +55,7 @@ function onLoadMore(event) {
 
   imageService.fetchImages().then(data => {
     createGallery(data.hits);
-    lightbox().refresh();
+    lightbox.refresh();
 
     hideSpinner();
 
@@ -94,13 +96,13 @@ function createGallery(images) {
   refs.galleryContainer.insertAdjacentHTML('beforeend', markup);
 }
 
-function lightbox() {
-  return new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionPosition: 'bottom',
-    captionDelay: 250,
-  });
-}
+// function lightbox() {
+//   return new SimpleLightbox('.gallery a', {
+//     captionsData: 'alt',
+//     captionPosition: 'bottom',
+//     captionDelay: 250,
+//   });
+// }
 
 function showSpinner() {
   refs.spinner.classList.remove('is-hidden');
