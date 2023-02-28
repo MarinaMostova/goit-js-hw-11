@@ -96,14 +96,6 @@ function createGallery(images) {
   refs.galleryContainer.insertAdjacentHTML('beforeend', markup);
 }
 
-// function lightbox() {
-//   return new SimpleLightbox('.gallery a', {
-//     captionsData: 'alt',
-//     captionPosition: 'bottom',
-//     captionDelay: 250,
-//   });
-// }
-
 function showSpinner() {
   refs.spinner.classList.remove('is-hidden');
   refs.buttonLoadMore.classList.add('is-hidden');
