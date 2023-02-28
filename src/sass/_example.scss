@@ -58,6 +58,7 @@ button {
   );
   border: none;
 }
+
 button:hover {
   background: rgb(0, 3, 255);
   background: linear-gradient(
@@ -120,6 +121,7 @@ img {
   border-radius: 5px;
   overflow: hidden;
 }
+
 .photo-card:hover {
   border-color: rgb(128, 128, 128);
   box-shadow: 0 0 5px rgb(0, 3, 255);
