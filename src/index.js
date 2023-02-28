@@ -22,6 +22,10 @@ function onFormSubmit(e) {
 
   imageService.query = e.currentTarget.elements.searchQuery.value.trim();
 
+  if (imageService.query === '') {
+    return;
+  }
+
   imageService.fetchImages().then(onfetchGallery).catch(onFetchError);
   dataCleaning();
 }
