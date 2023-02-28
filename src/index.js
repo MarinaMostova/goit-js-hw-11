@@ -54,6 +54,7 @@ function onLoadMore(event) {
     hideSpinner();
 
     let currentPage = data.totalHits / imageService.perPage;
+    console.log(currentPage);
     if (imageService.page > currentPage) {
       refs.buttonLoadMore.classList.add('is-hidden');
       refs.endPageText.classList.remove('is-hidden');
@@ -115,5 +116,5 @@ function onFetchError(error) {
 function dataCleaning() {
   refs.galleryContainer.innerHTML = '';
   refs.buttonLoadMore.classList.add('is-hidden');
-  refs.endPage.classList.add('is-hidden');
+  refs.endPageText.classList.add('is-hidden');
 }
