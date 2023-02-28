@@ -53,8 +53,8 @@ function onLoadMore(event) {
 
     hideSpinner();
 
-    let currentPage = data.totalHits / imageService.perPage;
-    console.log(currentPage);
+    const currentPage = data.totalHits / imageService.perPage;
+
     if (imageService.page > currentPage) {
       refs.buttonLoadMore.classList.add('is-hidden');
       refs.endPageText.classList.remove('is-hidden');
